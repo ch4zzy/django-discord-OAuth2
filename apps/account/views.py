@@ -27,6 +27,7 @@ def discord_login_redirect(request):
     code = request.GET.get("code")
     user_data = exchange_code(code)
     discord_user = authenticate(request, user=user_data)
+    discord_user = list(discord_user).pop()
     login(request, discord_user, backend="apps.account.auth.DiscordBackend")
     return JsonResponse({"user": user_data})
 
